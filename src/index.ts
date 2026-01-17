@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express'
 import cors from 'cors'
 import "dotenv/config"
+import { connectDB } from './config/db';
 
 const app = express();
 app.use(express.json());
@@ -14,6 +15,11 @@ app.get("/test", async (req: Request, res: Response) => {
     });
 });
 
-app.listen(8080,()=>{
-    console.log("Server is listening ")
-});
+const runServer = () => {
+    connectDB();
+    app.listen(process.env.PORT,()=>{
+        console.log("Server is started")
+    })
+}
+
+runServer();
